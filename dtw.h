@@ -1,5 +1,5 @@
 #ifndef DTW_H 
 #define DTW_H
-void dtw();
+int  dtw(int *,int *,int,int);
 
 #endif

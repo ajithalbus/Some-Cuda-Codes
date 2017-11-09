@@ -5,7 +5,7 @@ dtw.o: dtw.cu dtw.h
 	nvcc -arch=sm_20 -c dtw.cu
 
 prefix.o: prefix.cu prefix.h
-	nvcc -arch=sm_20 -c prefix.cu
+	nvcc -arch=sm_20 -c -Xcompiler -fopenmp prefix.cu 
 
 kernel.o: kernel.cu kernel.h
 	nvcc -arch=sm_20 -c kernel.cu

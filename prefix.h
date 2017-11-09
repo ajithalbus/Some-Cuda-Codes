@@ -1,5 +1,5 @@
 #ifndef PREFIX_H 
 #define PREFIX_H
-void prefix(int *,int);
+int * prefix(int *,int);
 
 #endif
