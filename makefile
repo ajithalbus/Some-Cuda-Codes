@@ -1,5 +1,5 @@
 main: mfcc.o kernel.o prefix.o dtw.o main.o
-	nvcc -arch=sm_20 mfcc.o kernel.o prefix.o dtw.o main.o -o run
+	nvcc -arch=sm_20 -lboost_system kernel.o prefix.o dtw.o main.o -o run
 
 dtw.o: dtw.cu dtw.h
 	nvcc -arch=sm_20 -c dtw.cu
@@ -10,8 +10,8 @@ prefix.o: prefix.cu prefix.h
 kernel.o: kernel.cu kernel.h
 	nvcc -arch=sm_20 -c kernel.cu
 
-mfcc.o: mfcc.cc mfcc.h
-	nvcc -arch=sm_20 -c mfcc.cc
+mfcc.o: mfcc.cu
+	nvcc -arch=sm_20 -c mfcc.cu
 
 main.o: main.cu
 	nvcc -arch=sm_20 -c main.cu

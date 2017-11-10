@@ -12,7 +12,7 @@ int abs(int a){
 
 int dtw_nv(int *x,int *y,int xN,int yN){
     size_t ds=sizeof(x[0]);
-    int *D,*y_host,*X,*Y;
+    int *D;
     int *D_host;
     int *x_device,*y_device;
     int i,j;
