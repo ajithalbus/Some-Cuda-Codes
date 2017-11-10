@@ -64,3 +64,13 @@ __global__ void q(int i,int *D,int *x_device,int *y_device,int *X,int *Y,int xN,
     D[i*xN+j]=X[j]+Y[j];
 
 }
+
+__global__ void q2(int i,int *D,int *x_device,int *y_device,int xN,int yN){
+    int tid=threadIdx.x;
+    if(tid==0){
+        D[i*xN]=dist(y_device[i],x_device[tid])+D[(i-1)*xN];
+    }    
+    else {
+        D[i*xN+tid]=d_min(D[(i-1)*xN+tid],D[(i-1)*xN+(tid-1)])+dist(y_device[i],x_device[tid]);
+    }
+}

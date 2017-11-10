@@ -6,6 +6,6 @@ __global__ void k3(int *,int );
 __global__ void k4(int *,int *);
 __global__ void k5(int *,int *);
 __global__ void q(int ,int *,int *,int *,int *,int *,int,int);
-    
+__global__ void q2(int ,int *,int *,int *,int ,int);    
 
 #endif

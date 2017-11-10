@@ -8,6 +8,6 @@ int main(){
         x[i]=i;
     }*/
     
-    int d=dtw(x,y,3,3);
+    int d=dtw_nv(x,y,3,3);
 
 }
