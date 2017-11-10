@@ -3,16 +3,17 @@
 #include<stdlib.h>
 #include<cuda.h>
 #include "mfcc.h"
+#include<string>
 using namespace std;
 //-Xcompiler -fopenmp
 
 
-    __host__ mfcc::mfcc(){
+     mfcc::mfcc(){
         cout<<"DEFAULT CONSTRUCTOR"<<endl;
     }
-    __host__ mfcc::mfcc(char file_name[]){
+     mfcc::mfcc(string file_name){
         fstream file;
-        file.open (file_name, ios::in );
+        file.open (file_name.c_str(), ios::in );
         file>>tmp>>N;
         features=(feature *)malloc(N*sizeof(feature));
         for(int i=0;i<N;i++){
@@ -27,11 +28,12 @@ using namespace std;
 
 
 
-__host__ __device__ float euclids(feature *a,feature *b){
+__host__ __device__ double euclids(feature a,feature b){
     int i;
-    float value=0;
+    double value=0;
     for (i=0;i<38;i++){
-        value+=(a->x[i]-b->x[i])*(a->x[i]-b->x[i]);
+        value+=(a.x[i]-b.x[i])*(a.x[i]-b.x[i]);
+        //printf("%f-%f=%f\n",a.x[i],b.x[i],value);;
     }
     return sqrt(value);
 }

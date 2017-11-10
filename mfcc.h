@@ -1,9 +1,10 @@
 #ifndef MFCC_H 
 #define MFCC_H
 
+#include<string>
 class feature{
 public:
-    float x[38];
+    double x[38];
 };
 
 
@@ -11,8 +12,8 @@ class mfcc{
 public:
     int N,tmp;
     feature *features;
-    __host__ mfcc();
-    __host__ mfcc(char file_name[]);
+     mfcc();
+     mfcc(std::string file_name);
 };
-__host__ __device__ float euclids(feature *,feature *);
+__host__ __device__ double euclids(feature ,feature );
 #endif

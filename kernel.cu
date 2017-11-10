@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<cuda.h>
-
+#include "mfcc.h"
 #define B 32
 __device__ int pow(int a,int b){
     int result=1;
@@ -14,6 +14,22 @@ __device__ int d_min(int a,int b){
     if(a<b) return a;
     return b;
 }
+
+__device__ double d_min(double a,double b){
+    if(a<b) return a;
+    return b;
+}
+
+__host__ __device__ double euclid(feature a,feature b){
+    int i;
+    double value=0;
+    for (i=0;i<38;i++){
+        value+=(a.x[i]-b.x[i])*(a.x[i]-b.x[i]);
+        //printf("%f-%f=%f\n",a.x[i],b.x[i],value);;
+    }
+    return sqrt(value);
+}
+
 
 __device__ int d_max(int a,int b){
     if(a>b) return a;
@@ -60,7 +76,7 @@ __global__ void q(int i,int *D,int *x_device,int *y_device,int *X,int *Y,int xN,
     t=d_min(D[(i-1)*xN+j],D[(i-1)*xN+(j-1)])+dist(y_device[i],x_device[j]);
     z=t-Y[j];
     X[j]=min(z,X[j-1]);
-    printf("x-%d y-%d\n",X[j],z);
+    //printf("x-%d y-%d\n",X[j],z);
     D[i*xN+j]=X[j]+Y[j];
 
 }
@@ -72,5 +88,16 @@ __global__ void q2(int i,int *D,int *x_device,int *y_device,int xN,int yN){
     }    
     else {
         D[i*xN+tid]=d_min(D[(i-1)*xN+tid],D[(i-1)*xN+(tid-1)])+dist(y_device[i],x_device[tid]);
+    }
+}
+
+__global__ void q3(int i,double *D,feature *x_device,feature *y_device,int xN,int yN){
+    
+    int tid=threadIdx.x;
+    if(tid==0){
+        D[i*xN]=euclid(y_device[i],x_device[tid])+D[(i-1)*xN];
+    }    
+    else {
+        D[i*xN+tid]=d_min(D[(i-1)*xN+tid],D[(i-1)*xN+(tid-1)])+euclid(y_device[i],x_device[tid]);
     }
 }
