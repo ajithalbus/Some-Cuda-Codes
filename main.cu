@@ -36,11 +36,11 @@ int argmin(double v[],int n){
 }
 
 int main(){
-    //int x[]={1,2,3};
-    /*for(int i=1;i<=5;i++){
-        x[i]=i;
-    }*/
-    //int d=dtw_nv(x,x,3,3);
+    /*int x[]={1,2,3,4,5},y[]={2,4,6,2};
+    int d=dtw_nv(x,y,5,4);
+    //cout<<d;
+    
+    */
     int i;
     string train="/home/ganesh/nw/dtw_cuda/datas/";
     
@@ -66,22 +66,5 @@ int main(){
         //cout<<"D-TEST "<<i<<endl;
     }
     cout<<argmin(d,9);
-    /*
-        mfcc one(train+"1/ac_1.mfcc");
-
-    mfcc two(train+"2/ac_2.mfcc");
-    mfcc three(train+"3/ac_3.mfcc");
-    string testn;
-    
-    double d[3];
-    
-    d[0]=dtw_nv(one,testmfcc);
-    d[1]=dtw_nv(two,testmfcc);
-    d[2]=dtw_nv(three,testmfcc);
-
-    cout<<argmin(d,3);
-
-    */
-
-    //cout<<d;  
+      
 }

@@ -69,13 +69,19 @@ __global__ void k5(int *Aux,int *S){
     S[(threadIdx.x+1)*B-1]=Aux[threadIdx.x];
 }
 
+__device__ int mas=1;
+
 __global__ void q(int i,int *D,int *x_device,int *y_device,int *X,int *Y,int xN,int yN){
     int j=threadIdx.x,t,z;
-    if(j==0) {X[0]=x_device[0];return;}
-
+    if(j==0) {X[0]=x_device[0];mas=1;return;}
+    __syncthreads();
     t=d_min(D[(i-1)*xN+j],D[(i-1)*xN+(j-1)])+dist(y_device[i],x_device[j]);
     z=t-Y[j];
+    //printf("DEBUG");
+    //while(mas!=j);
     X[j]=min(z,X[j-1]);
+    printf("%d-%d\n",j,X[j]);
+    //atomicAdd(&mas,1);
     //printf("x-%d y-%d\n",X[j],z);
     D[i*xN+j]=X[j]+Y[j];
 

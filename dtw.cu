@@ -91,6 +91,7 @@ int dtw_nv(int *x,int *y,int xN,int yN){
     
     cudaMemcpy(D,tmp,ds*xN,cudaMemcpyHostToDevice);
     
+    
     for(i=1;i<yN;i++)
     q2<<<1,xN>>>(i,D,x_device,y_device,xN,yN);
 
@@ -147,6 +148,7 @@ for(i=1;i<yN;i++){
     cudaMemcpy(Y,y_host,ds*xN,cudaMemcpyHostToDevice);
     q<<<1,xN>>>(i,D,x_device,y_device,X,Y,xN,yN);
     cudaDeviceSynchronize();
+    //break;
 }
 
 cudaMemcpy(D_host,D,ds*xN*(yN+1),cudaMemcpyDeviceToHost);
